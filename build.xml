@@ -1,0 +1,20 @@
+<project name="AQM_Apps" default="dist" basedir=".">
+	<property file="build.properties"/>
+	<property file="apikey.properties"/>
+	<property name="images" value="images"/>
+	<property name="dist.jar" value="aqmapps.war"/>
+	
+	<target name="dist">
+	    <replace file="${api.keysrc}" token="@API_KEY@" value="${api.key}" />
+    	    <jar destfile="${dist.jar}" basedir="WebContent"/>    
+  	</target>
+	
+	<target name="deploy" depends="dist">
+	    <copy file="${dist.jar}" todir="${tomcat.home}/webapps" overwrite="yes"/>
+	</target>
+	
+	<target name="clean">
+		<delete file="${dist.jar}" />
+		<delete dir="WEB-INF" />
+	</target>	
+</project>

@@ -1,0 +1,63 @@
+GeoJSON
+
+{
+	"type": "FeatureCollection",
+	"features": [
+		{
+			"type":"Feature",
+			"properties": {
+				"type":"Dylos",
+				"deviceId":"aqm5",
+				"dateTime":"Fri Mar 28 07:24:04 MST 2014",
+				"method":"manual",
+				"userId":"user5",
+				"smallParticle":71,
+				"largeParticle":14
+			},
+			"geometry": {
+				"type":"Point",
+				"coordinates":[-111.680775,33.301878]
+			}
+		},
+		{
+			"type":"Feature",
+			"properties": {
+				"type":"Sensordrone",
+				"deviceId":"SensorDroneB8:FF:FE:B9:C3:FA",
+				"dateTime":"Thu Mar 27 07:22:42 MST 2014",
+				"method":"Network",
+				"co2SensorId":"unknown",
+				"coData":-2,
+				"co2Data":-1,
+				"presureData":96264,
+				"tempData":25,
+				"humidityData":35
+			},
+			"geometry": {
+				"type":"Point",
+				"coordinates":[-111.6725,33.309986]
+			}		
+		}
+	]
+}
+
+Air Quality rating
+Dylos:   Small Particle Reading
+	1000 +   	= Hazardous	red	4
+	350-1000 	= Bad		orange	3
+	100-350  	= Moderate		yellow	2
+	0-100   	= Good		green 	1
+
+	none paleblue	
+	
+Sensordrone:   CO Reading
+	0-5 	= Good
+	5-10 	= Moderate
+	10-35 	= Bad
+	35 + 	= Hazardous
+	
+	CO2 Reading
+	0-1000 Good
+	1000-1500 Moderate
+	1500 +  Bad
+	

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AQM Map</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel=stylesheet href="css/leaflet.css">
+<link rel=stylesheet href="css/aqmbase.css">
+<script src="js/jquery-1.6.4.min.js"></script>
+<script src="js/leaflet.js"></script>
+<script src="js/aqmbase.js"></script>
+<script src="js/page-leaflet.js"></script>
+<script type="text/javascript">
+	var map;
+	//var baseurl = 'http://localhost:8080/aqm/rest';
+	var baseurl = '/aqm/rest';
+	var geoJsonLayer = L.geoJson();
+</script>
+</head>
+<body>
+	<div class="help">
+		<div class="helptool">
+			<select id = "selectDevice"></select>
+			<select id = "selectId" style="display:none"></select>
+			<input type="number" id="selectNum" style="width:50px" min="0" step="50" value="50" pattern="\d*"/>
+			<button id="searchBtn">Search</button>	
+			<button id="resetBtn">Reset</button>
+		</div>
+		<input id="MapBtn" type="button" value="Try GoogleMap" onclick="window.location.href='index.html'"/> 
+	</div>
+
+	<div id="map_canvas"></div>
+	<div id="title">AQM Map leaflet</div>
+</body>
+</html>
