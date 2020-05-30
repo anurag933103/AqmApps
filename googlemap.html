@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AQM Map</title>
+<link rel=stylesheet href="css/jquery-ui-1.10.4.css">
+<link rel=stylesheet href="css/jquery.ui.timepicker.css">
+<link rel=stylesheet href="css/aqmbase.css">
+<style type="text/css">
+#infor_string {
+	line-height: 1.35;
+	overflow: hidden;
+	white-space: nowrap;
+}
+</style>
+<script src="js/jquery-1.6.4.min.js"></script>
+<script src="js/jquery-ui-1.10.4.js"></script>
+<script type="text/javascript" src="js/jquery.ui.timepicker.js?v=0.3.3"></script>
+<script src="js/aqmbase.js"></script>
+<script src="js/page-googlemap.js"></script>
+<script
+	src="https://maps.googleapis.com/maps/api/js?key=@API_KEY@&libraries=visualization">
+</script>
+<script type="text/javascript">
+	var map;
+	var infowindow;
+	var markers = [];
+	//var baseurl = 'http://localhost:8080/aqm/rest';
+	var baseurl = '/aqm/rest';
+
+</script>
+</head>
+<body>
+	<div class="help">
+		<div class="helptool">
+			<select id = "selectDevice"></select>
+			<select id = "selectId" style="display:none"></select>
+			<input type="number" id="selectNum" style="width:50px" min="0" step="50" value="50" pattern="\d*" title="set the numbers of search data"/>
+			<input type="text" id="datefrom" value="From" title="set the start date for search" style="width:80px"/>
+			<input type="text" id="timefrom" value="00:00" title="set the start time for search" style="width:50px"/>
+			<input type="text" id="dateto" value="To" title="set the end date for search" style="width:80px"/>
+			<input type="text" id="timeto" value="00:00" title="set the end time for search" style="width:50px"/>
+			<button id="searchBtn">Search</button>	
+			<button id="resetBtn">Reset</button>
+		</div>
+		
+		<input id="MapBtn" type="button" value="Try LeafletMap" onclick="window.location.href='map2.html'"/> 
+	</div>
+
+	<div id="map_canvas"></div>
+	<div id="title">AQM Map</div>
+	
+</body>
+</html>

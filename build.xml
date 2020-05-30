@@ -5,8 +5,10 @@
 	<property name="dist.jar" value="aqmapps.war"/>
 	
 	<target name="dist">
+	    <copy file="./googlemap.html" tofile="${api.keysrc}" overwrite="yes"/>
 	    <replace file="${api.keysrc}" token="@API_KEY@" value="${api.key}" />
     	    <jar destfile="${dist.jar}" basedir="WebContent"/>    
+	    <delete file="${api.keysrc}" />
   	</target>
 	
 	<target name="deploy" depends="dist">
