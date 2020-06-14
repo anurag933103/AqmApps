@@ -1,3 +1,10 @@
+There are 2 applications, one a web application in WebContent that interacts with
+the AQM API to map air quality readings. The other is a command-line program to 
+simulate air quality readings over time in a given rectangular region define by lat/long.
+The mapping app supprots Leaflet and Google Maps, though Google maps requires you to obtain
+your own API key on GCP. You then put your key in the apikey.txt file and the build script
+will automagically incorporate it into the generated app. 
+
 This project holds 2 simple mapping applications that render data from the
 AQM REST API. Pins are dropped with a D or S dependening on which air quality
 sensor the read was taken from (Dylos or Sensordrone), and colored according
