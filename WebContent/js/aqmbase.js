@@ -38,7 +38,7 @@ function getSensordroneMarker(co, co2) {
 	else {rateco2 = 6;} //no data
 	if (co2 >= 1000) rateco2 = 8; //Moderate
 	if (co2 >= 1500) rateco2 = 9; //Bad
-
+    if (co2 >= 2500) rateco2 = 10;
 	var rate;
 	if(rateco >= rateco2) {
 		rate = rateco;

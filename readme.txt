@@ -1,5 +1,9 @@
-GeoJSON
+This project holds 2 simple mapping applications that render data from the
+AQM REST API. Pins are dropped with a D or S dependening on which air quality
+sensor the read was taken from (Dylos or Sensordrone), and colored according
+to default sensor thresholds.
 
+Data format: GeoJSON
 {
 	"type": "FeatureCollection",
 	"features": [

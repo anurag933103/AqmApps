@@ -52,18 +52,35 @@ function ajaxPost(url, elem) {
 }</script>
 </head>
 <body>
-<textarea rows="15" cols="150">
-sensordrone sample:
-[{"coData":-2,"dateTime":"20140321_124956","geoLongitude":-111.6823322,"co2Data":-1,"co2DeviceID":"UNKNOWN","geoMethod":"Network","type":"sensordrone","presureData":96464,"tempData":25,"geoLatitude":33.2993061,"deviceId":"SensorDroneB8:FF:FE:B9:C3:FA","humidityData":32}]
-    
-dylos sample:
-[{"type":"dylos","deviceId":"aqm1","userId":"user1","dateTime":"Fri Mar 21 13:27:09 MST 2014","smallParticle":93,"largeParticle":26,"geoLatitude":33.3099177,"geoLongitude":-111.6726974,"geoMethod":"manual"}]
-
-combined sample:
-[{"coData":-2,"dateTime":"20140321_124956","geoLongitude":-111.6823322,"co2Data":-1,"co2DeviceID":"UNKNOWN","geoMethod":"Network","type":"sensordrone","presureData":96464,"tempData":25,"geoLatitude":33.2993061,"deviceId":"SensorDroneB8:FF:FE:B9:C3:FA","humidityData":32},{"type":"dylos","deviceId":"aqm1","userId":"user1","dateTime":"Fri Mar 21 13:26:39 MST 2014","smallParticle":93,"largeParticle":26,"geoLatitude":33.3099177,"geoLongitude":-111.6726974,"geoMethod":"manual"},{"type":"dylos","deviceId":"aqm1","userId":"user1","dateTime":"Fri Mar 21 13:27:59 MST 2014","smallParticle":93,"largeParticle":26,"geoLatitude":33.3099177,"geoLongitude":-111.6726974,"geoMethod":"manual"}]
+<textarea rows="33" cols="80">
+sample:
+[{
+	"coData": -2,
+	"dateTime": "Fri Jun 12 13:27:17 MST 2020",
+	"geoLongitude": -111.6823322,
+	"co2Data": -1,
+	"co2DeviceID": "UNKNOWN",
+	"geoMethod": "Network",
+	"type": "sensordrone",
+	"pressureData": 96464,
+	"tempData": 25,
+	"geoLatitude": 33.2993071,
+	"deviceId": "SensorDroneB8:FF:FE:B9:C3:FA",
+	"humidityData": 32
+}, {
+	"type": "dylos",
+	"deviceId": "aqm1",
+	"userId": "user1",
+	"dateTime": "Fri Jun 12 13:27:28 MST 2020",
+	"smallParticle": 93,
+	"largeParticle": 26,
+	"geoLatitude": 33.3099177,
+	"geoLongitude": -111.6726979,
+	"geoMethod": "manual"
+}]
     </textarea>
     <textarea id="__str" rows="5" cols="80">
-Copy your string content here
+Copy your JSON content here, be sure to change id or date to avoid PK conflicts
     </textarea>
     <input type="button" value="submit" onclick="postData()"/>
     <div id="ServerResponse"></div>
