@@ -1,8 +1,12 @@
+  
 <project name="AQM_Apps" default="dist" basedir=".">
 	<property file="build.properties"/>
 	<property file="apikey.properties"/>
 	<property name="images" value="images"/>
 	<property name="dist.jar" value="aqmapps.war"/>
+	<property name="classes" value="classes" />
+	<property name="build" value="build"/>
+	<property name="lib" value="lib"/>
 	
 	<target name="dist">
 	    <copy file="./googlemap.html" tofile="${api.keysrc}" overwrite="yes"/>
@@ -11,11 +15,41 @@
 	    <delete file="${api.keysrc}" />
   	</target>
 	
-	<target name="deploy" depends="dist">
+	<target name="prepare">
+			<tstamp/>
+			<mkdir dir="${build}"/>
+			<mkdir dir="${build}/WEB-INF"/>
+		</target>
+	
+	<target name="build" depends="prepare">
+			<copy todir="${build}/WEB-INF/${classes}">
+				<fileset dir="${classes}"/>
+				<fileset dir="${aqmcommon.home}/${classes}" />
+			</copy>
+			<copy todir="${build}/WEB-INF/${classes}/properties">
+			    <fileset dir="${aqmcommon.home}/properties">
+			    		<include name="**.properties"/>	
+			    </fileset>
+			</copy>
+			<copy todir="${build}/WEB-INF/${classes}/">
+				    <fileset dir="./properties">
+				    		<include name="**.properties"/>	
+				    </fileset>
+				</copy>
+			<copy todir="${build}/WEB-INF/${lib}">
+				<fileset dir="${lib}"/>		
+			</copy> 
+		    <copy todir="${build}/WEB-INF/${lib}">
+	            <fileset dir="${aqmcommon.home}/${lib}"/>     
+	        </copy>         
+		</target>
+	
+	<target name="deploy" depends="dist,build">
 	    <copy file="${dist.jar}" todir="${tomcat.home}/webapps" overwrite="yes"/>
 	</target>
 	
 	<target name="clean">
+		<delete dir="${build}" />
 		<delete file="${dist.jar}" />
 		<delete dir="WEB-INF" />
 	</target>	
