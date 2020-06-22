@@ -3,6 +3,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
+import javax.jms.*;
+import javax.naming.*;
+
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
@@ -53,7 +56,45 @@ public class SimplePump {
 	 *  
 	 * @param args
 	 */
+	
+	private TopicSession pubSession;
+    private TopicPublisher publisher;
+    private TopicConnection connection;
+
+    /* Establish JMS publisher */
+    public SimplePump(String topicName, String username, String password) throws Exception {
+	// Obtain a JNDI connection - see jndi.properties
+	InitialContext jndi = new InitialContext();
+	// Look up a JMS connection factory
+	TopicConnectionFactory conFactory = (TopicConnectionFactory)jndi.lookup("topicConnectionFactry");
+	// Create a JMS connection
+	connection = conFactory.createTopicConnection(username, password);
+	// Create JMS session objects for publisher
+	pubSession = connection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
+	// Look up a JMS topic
+	Topic chatTopic = (Topic) jndi.lookup(topicName);
+	// Create a JMS publisher
+	publisher = pubSession.createPublisher(chatTopic);
+	publisher.setDeliveryMode(DeliveryMode.PERSISTENT);
+    }	
+    
+    private boolean goPublish(String s) {
+    	boolean rval = true;
+    	try {
+    	    // Create and send message using topic publisher
+    	    TextMessage message = pubSession.createTextMessage();
+    	    message.setText(s);
+    	    publisher.publish(message);
+    	} catch (Throwable thw1) {
+    	    thw1.printStackTrace();
+    	    rval = false;
+    	}
+    	return rval;
+        }
+	
+	
 	public static void main(String[] args) {
+		try {
 		float lat1 = DEFAULT_LAT1;
 		float lat2 = DEFAULT_LAT2;
 		float long1 = DEFAULT_LONG1;
@@ -66,12 +107,14 @@ public class SimplePump {
 		float latitude=DEFAULT_LAT1, longitude=DEFAULT_LONG1;   // the actual coordinates for the sensor readings.
 		
 		// Process command-line params
-		if (args.length % 2 != 0) {  // gotta have even number of args
+		if (args.length % 2 != 1) {  // gotta have odd number of args
 			System.out.println(USAGE);
 			System.exit(-1);
 		}
+		
+		SimplePump demo = new SimplePump(args[0], args[1], args[2]);
 
-		for (int i = 0; i < args.length; i++) {
+		for (int i = 3; i < args.length; i++) {
 			// if I wasn't lazy I would've made a String enum or something
 			System.out.println("Processing arg " + args[i] + " value " + args[i+1]);
 			if (args[i].equals(URL)) url = args[++i];
@@ -136,29 +179,41 @@ public class SimplePump {
 	    	
 	    	// prepare the HTTP POST
 			// From https://www.baeldung.com/httpclient-post-http-request with mods
-		    CloseableHttpClient client = HttpClients.createDefault();
-		    HttpPost httpPost = new HttpPost(url);
-	    	StringEntity entity = new StringEntity("["+json+"]");
-	    	httpPost.setEntity(entity);
-	    	httpPost.setHeader("Accept", "application/json");
-	    	httpPost.setHeader("Content-type", "application/json");
+//      	CloseableHttpClient client = HttpClients.createDefault();
+// 		    HttpPost httpPost = new HttpPost(url);
+// 	    	StringEntity entity = new StringEntity("["+json+"]");
+// 	    	httpPost.setEntity(entity);
+// 	    	httpPost.setHeader("Accept", "application/json");
+// 	    	httpPost.setHeader("Content-type", "application/json");
 	 
-	    	CloseableHttpResponse response = null;
-			try {
-				response = client.execute(httpPost);
-				client.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-				System.exit(-1);
-			} 
-	    	System.out.println("POSTed " + json + "\n with response code " + response.getCode());
+//	    	CloseableHttpResponse response = null;
+//			try {
+//				response = client.execute(httpPost);
+//				client.close();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//				System.exit(-1);
+//			} 
+//	    	System.out.println("POSTed " + json + "\n with response code " + response.getCode());
+
+	    	
+			if (demo.goPublish(json)) {
+			System.out.println("Published " + json);
+			} else {
+			System.out.println("Unable to publish " + json);
+			}
 
 	    	// wait for the next one
 	    	try {
 	    		Thread.sleep(60/rate * 1000);
 	    	} catch (InterruptedException ie) {
 	    		ie.printStackTrace();
+	    		demo.connection.close();
+				System.exit(0);
 	    	}
 	    }
+	  }catch (Exception e) {
+		    e.printStackTrace();
+		}
 	}
 }
