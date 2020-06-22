@@ -6,11 +6,11 @@ import java.util.Random;
 import javax.jms.*;
 import javax.naming.*;
 
-import org.apache.hc.client5.http.classic.methods.HttpPost;
+/*import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
-import org.apache.hc.core5.http.io.entity.StringEntity;
+import org.apache.hc.core5.http.io.entity.StringEntity;*/
 
 public class SimplePump {
 	private static final String USAGE = "java edu.asupoly.heal.aqm.clients.SimplePump -url <URL> -device dylos|sensordrone -lat1 float -lat2 float -long1 float -long2 float -rate int -num int";
